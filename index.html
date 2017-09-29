@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=0">
+	</head>
+	<body>
+		<center>
+			<h1>博饼</h1>
+			<br>
+			<img id="img1" src="1.png">
+			<img id="img2" src="2.png">
+			<br>
+			<img id="img3" src="3.png">
+			<img id="img4" src="4.png">
+			<br>
+			<img id="img5" src="5.png">
+			<img id="img6" src="6.png">
+			<br>
+			<button type="button" id="ss">停止</button>  
+		</center>
+		<script type="text/javascript">
+			var run = true;
+			document.getElementById("ss").onclick = function () {
+				if (run) {
+					run = false;
+					document.getElementById("ss").innerHTML = "开始";
+				}
+				else {
+					run = true;
+					document.getElementById("ss").innerHTML = "停止";
+					setTimeout('change()',100);
+				}
+				
+
+			}
+			function change() {
+				document.getElementById('img1').src=Math.round(1+Math.random()*5)+".png";
+				document.getElementById('img2').src=Math.round(1+Math.random()*5)+".png";
+				document.getElementById('img3').src=Math.round(1+Math.random()*5)+".png";
+				document.getElementById('img4').src=Math.round(1+Math.random()*5)+".png";
+				document.getElementById('img5').src=Math.round(1+Math.random()*5)+".png";
+				document.getElementById('img6').src=Math.round(1+Math.random()*5)+".png";
+				if (run) setTimeout('change()',100);
+			}
+			setTimeout('change()',100);
+		</script>
+	</body>
+</html>
