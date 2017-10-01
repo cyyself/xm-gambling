@@ -35,9 +35,9 @@
 				var hash = [0,0,0,0,0,0,0];
 				for (var i=0;i<arr.length;i++) hash[arr[i]] ++;
 				//状元{
-				if (hash[4] >= 4) return 6;//普通状元||状元插金花
-				for (var i=1;i<=6;i++) if (hash[i] >= 5) return 6;//五子登科
 				if (hash[4] == 6) return 6;//六抔红
+				for (var i=1;i<=6;i++) if (hash[i] >= 5) return 6;//五子登科
+				if (hash[4] >= 4) return 6;//普通状元||状元插金花
 				//状元}
 				if (hash[1] == 1 && hash[2] == 1 && hash[3] == 1 && hash[4] == 1 && hash[5] == 1 && hash[6] == 1) return 5;//对堂
 				if (hash[4] >= 3) return 4;//三红
