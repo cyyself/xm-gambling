@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<center>
-			<h1>博饼</h1>
+			<h1 id="title">博饼</h1>
 			<br>
 			<img id="img1" src="1.png">
 			<img id="img2" src="2.png">
@@ -21,6 +21,76 @@
 		</center>
 		<script type="text/javascript">
 			var run = true;
+			function judge(arr) {
+				/*
+				返回值：
+					0->没有
+					1->一秀
+					2->二举
+					3->四进
+					4->三红
+					5->对堂
+					6->状元
+				*/
+				var hash = [0,0,0,0,0,0,0];
+				for (var i=0;i<arr.length;i++) hash[arr[i]] ++;
+				//状元{
+				if (hash[4] >= 4) return 6;//普通状元||状元插金花
+				for (var i=1;i<=6;i++) if (hash[i] >= 5) return 6;//五子登科
+				if (hash[4] == 6) return 6;//六抔红
+				//状元}
+				if (hash[1] == 1 && hash[2] == 1 && hash[3] == 1 && hash[4] == 1 && hash[5] == 1 && hash[6] == 1) return 5;//对堂
+				if (hash[4] >= 3) return 4;//三红
+				for (var i=1;i<=6;i++) if (hash[i] >= 4) return 3;//四进
+				if (hash[4] >= 2) return 2;//二举
+				if (hash[4] >= 1) return 1;//一秀
+				return -1;
+			}
+			function change() {
+				var rn = [
+					Math.round(1+Math.random()*5),
+					Math.round(1+Math.random()*5),
+					Math.round(1+Math.random()*5),
+					Math.round(1+Math.random()*5),
+					Math.round(1+Math.random()*5),
+					Math.round(1+Math.random()*5)
+				];
+				document.getElementById('img1').src=rn[0]+".png";
+				document.getElementById('img2').src=rn[1]+".png";
+				document.getElementById('img3').src=rn[2]+".png";
+				document.getElementById('img4').src=rn[3]+".png";
+				document.getElementById('img5').src=rn[4]+".png";
+				document.getElementById('img6').src=rn[5]+".png";
+				if (run) setTimeout('change()',100);
+				else {
+					var result = judge(rn);
+					var resultstr = "";
+					switch (result) {
+						case 1:
+							resultstr = "一秀";
+							break;
+						case 2:
+							resultstr = "二举";
+							break;
+						case 3:
+							resultstr = "四进";
+							break;
+						case 4:
+							resultstr = "三红";
+							break;
+						case 5:
+							resultstr = "对堂";
+							break;
+						case 6:
+							resultstr = "状元";
+							break;
+						default:
+							resultstr = "没有";
+							break;
+					}
+					document.getElementById("title").innerHTML = resultstr;
+				}
+			}
 			document.getElementById("ss").onclick = function () {
 				if (run) {
 					run = false;
@@ -29,19 +99,9 @@
 				else {
 					run = true;
 					document.getElementById("ss").innerHTML = "停止";
+					document.getElementById("title").innerHTML = "博饼";
 					setTimeout('change()',100);
 				}
-				
-
-			}
-			function change() {
-				document.getElementById('img1').src=Math.round(1+Math.random()*5)+".png";
-				document.getElementById('img2').src=Math.round(1+Math.random()*5)+".png";
-				document.getElementById('img3').src=Math.round(1+Math.random()*5)+".png";
-				document.getElementById('img4').src=Math.round(1+Math.random()*5)+".png";
-				document.getElementById('img5').src=Math.round(1+Math.random()*5)+".png";
-				document.getElementById('img6').src=Math.round(1+Math.random()*5)+".png";
-				if (run) setTimeout('change()',100);
 			}
 			setTimeout('change()',100);
 		</script>
