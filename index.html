@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="initial-scale=1, user-scalable=0">
+		<title>博饼</title>
 	</head>
 	<body>
 		<center>
@@ -21,30 +22,35 @@
 		</center>
 		<script type="text/javascript">
 			var run = true;
+			var interval = 1;
 			function judge(arr) {
-				/*
-				返回值：
-					0->没有
-					1->一秀
-					2->二举
-					3->四进
-					4->三红
-					5->对堂
-					6->状元
-				*/
 				var hash = [0,0,0,0,0,0,0];
 				for (var i=0;i<arr.length;i++) hash[arr[i]] ++;
 				//状元{
-				if (hash[4] == 6) return 6;//六抔红
-				for (var i=1;i<=6;i++) if (hash[i] >= 5) return 6;//五子登科
-				if (hash[4] >= 4) return 6;//普通状元||状元插金花
+				if (hash[4] == 4 && hash[1] == 2) return "状元插金花";
+				if (hash[4] == 6) return "状元-六抔红";
+				for (var i=1;i<=6;i++) if (hash[i] == 6) return "状元-六子登科";
+				for (var i=1;i<=6;i++) if (hash[i] == 5) {
+					var ret = "状元-五子登科带";
+					if (i == 4) ret = "状元-五红带"
+					var num = 0;
+					for (var j=1;j<=6;j++) if (j != i) num += hash[j] * j;
+					return ret + num;
+				}
+				if (hash[4] >= 4) {
+					var num = 0;
+					for (var i=1;i<=6;i++) if (i != 4) num += hash[i] * i;
+					return "状元带"+num;
+				}
 				//状元}
-				if (hash[1] == 1 && hash[2] == 1 && hash[3] == 1 && hash[4] == 1 && hash[5] == 1 && hash[6] == 1) return 5;//对堂
-				if (hash[4] >= 3) return 4;//三红
-				for (var i=1;i<=6;i++) if (hash[i] >= 4) return 3;//四进
-				if (hash[4] >= 2) return 2;//二举
-				if (hash[4] >= 1) return 1;//一秀
-				return 0;
+				if (hash[1] == 1 && hash[2] == 1 && hash[3] == 1 && hash[4] == 1 && hash[5] == 1 && hash[6] == 1) {
+					return "对堂";
+				}
+				if (hash[4] >= 3) return "三红";
+				for (var i=1;i<=6;i++) if (hash[i] >= 4) return "四进";
+				if (hash[4] >= 2) return "二举";
+				if (hash[4] >= 1) return "一秀";
+				return "没有";
 			}
 			function change() {
 				var rn = [
@@ -61,33 +67,9 @@
 				document.getElementById('img4').src=rn[3]+".png";
 				document.getElementById('img5').src=rn[4]+".png";
 				document.getElementById('img6').src=rn[5]+".png";
-				if (run) setTimeout('change()',100);
+				if (run) setTimeout('change()',interval);
 				else {
-					var result = judge(rn);
-					var resultstr = "";
-					switch (result) {
-						case 1:
-							resultstr = "一秀";
-							break;
-						case 2:
-							resultstr = "二举";
-							break;
-						case 3:
-							resultstr = "四进";
-							break;
-						case 4:
-							resultstr = "三红";
-							break;
-						case 5:
-							resultstr = "对堂";
-							break;
-						case 6:
-							resultstr = "状元";
-							break;
-						default:
-							resultstr = "没有";
-							break;
-					}
+					var resultstr = judge(rn);
 					document.getElementById("title").innerHTML = resultstr;
 				}
 			}
@@ -100,10 +82,10 @@
 					run = true;
 					document.getElementById("ss").innerHTML = "停止";
 					document.getElementById("title").innerHTML = "博饼";
-					setTimeout('change()',100);
+					setTimeout('change()',interval);
 				}
 			}
-			setTimeout('change()',100);
+			setTimeout('change()',interval);
 		</script>
 	</body>
 </html>
